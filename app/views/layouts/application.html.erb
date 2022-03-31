@@ -11,6 +11,14 @@
   </head>
 
   <body>
+    <%if(user_signed_in?) %>
+       <h2>Signed in as <%= current_user.full_name %></h2> 
+      <%= button_to "Log out", sign_out_path, method: :delete %>
+    <% else %>
+      <%= link_to 'Sign In Page', session_new_path%>
+      <%= link_to 'Sign Up Page', new_user_path%>
+    <% end %>
+
     <%= yield %>
   </body>
 </html>
