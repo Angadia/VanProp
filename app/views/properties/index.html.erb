@@ -1,0 +1,11 @@
+<h1>Properties Index Page</h1>
+
+<% @properties.each do |property|  %>
+  <div>
+    <h2><%= link_to property.title, property_path(property) %></h2>
+    <p><%= property.description %></p>
+    <p><%= property.amenities %></p>
+    <p><%= property.price %></p>
+    <hr>
+  </div>
+<% end %>
