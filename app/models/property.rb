@@ -1,5 +1,6 @@
 class Property < ApplicationRecord
   belongs_to :user
+
   has_many :questions, dependent: :destroy
   has_many :answers, through: :questions, source: :answer
   has_many :applications, dependent: :destroy
