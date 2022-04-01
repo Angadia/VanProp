@@ -12,12 +12,20 @@
 
   <body>
     <%if(user_signed_in?) %>
-       <h2>Signed in as <%= current_user.full_name %></h2> 
+      <% if current_user&.administrator %>
+        <%= link_to 'New Property', new_property_path %>
+      <% end %>
+       Hi, <%= current_user.full_name %>
       <%= button_to "Log out", session_path, method: :delete %>
     <% else %>
-      <%= link_to 'Sign In Page', new_session_path %>
-      <%= link_to 'Sign Up Page', new_user_path %>
+      <%= link_to 'Sign In', new_session_path %>
+      <%= link_to 'Sign Up', new_user_path %>
     <% end %>
+    
+    <% flash.each do |type, message| %>
+      <%= type + ": " + message %>
+    <% end %>
+
 
     <%= yield %>
   </body>
