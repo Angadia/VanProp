@@ -62,7 +62,7 @@ clients = User.where administrator: false
 
   next unless p.persisted?
 
-  # Create questions for a property
+  # Create only client questions for a property
   rand(1..3).times do
     q_created_at = Faker::Date.between(from: p_created_at, to: 11.days.ago)
     q_updated_at = Faker::Date.between(from: q_created_at, to: 6.days.ago)
@@ -71,13 +71,14 @@ clients = User.where administrator: false
       body: Faker::Quotes::Shakespeare.as_you_like_it_quote,
       user_id: clients.sample.id,
       property_id: p.id,
+      display: [true, false].sample,
       created_at: q_created_at,
       updated_at: q_updated_at
     )
 
     next unless q.persisted?
 
-    # Create answers for a question
+    # Create only client answers for a question
     rand(1..3).times do
       ans_created_at = Faker::Date.between(from: q_created_at, to: 1.days.ago)
       ans_updated_at = Faker::Date.between(from: ans_created_at, to: Date.today)
@@ -92,7 +93,7 @@ clients = User.where administrator: false
     end
   end
 
-  # Create pending applications for a property
+  # Create applications for a property
   rand(1..3).times do
     a_created_at = Faker::Date.between(from: p_created_at, to: 5.days.ago)
     a_updated_at = Faker::Date.between(from: a_created_at, to: Date.today)
@@ -100,6 +101,7 @@ clients = User.where administrator: false
     Application.create(
       user_id: clients.sample.id,
       property_id: p.id,
+      status: %w[pending rejected approved].sample,
       created_at: a_created_at,
       updated_at: a_updated_at
     )
