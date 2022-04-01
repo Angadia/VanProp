@@ -11,14 +11,13 @@ Rails.application.routes.draw do
 
   resource :session, only: %i[new create destroy]
 
-  post '/applications/:id', { to: 'applications#approve', as: :approve_application }
-  post '/applications/:id', { to: 'applications#reject', as: :reject_application }
+  post '/applications/:id/approved', { to: 'applications#approve', as: :approve_application }
+  post '/applications/:id/rejected', { to: 'applications#reject', as: :reject_application }
 
   resources :properties, except: [:index] do
-    resources :applications, only: [:create, :destroy]
-    resources :questions, only: [:create, :destroy, :update] do
-      resources :answers, shallow: true, only: [:create, :destroy]
+    resources :applications, only: [:create]
+    resources :questions, only: %i[create destroy update] do
+      resources :answers, shallow: true, only: %i[create destroy]
     end
   end
-
 end

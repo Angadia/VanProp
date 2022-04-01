@@ -65,7 +65,7 @@
       </td>
     </tr>
   </table>
-<% else %>
+<% end %>
   <h1>Client Panel</h1>
   <table>
     <tr style="text-align:left;">
@@ -113,7 +113,7 @@
             <th style="border: 1px solid black; border-collapse: collapse;">Property</th>
             <th style="border: 1px solid black; border-collapse: collapse;">Status</th>
           </tr>
-          <% @pending_applications.each do |application| %>
+          <% @my_pending_applications.each do |application| %>
             <tr>
               <td style="border: 1px solid black; border-collapse: collapse;"><%= application.property.id %></td>
               <td style="border: 1px solid black; border-collapse: collapse;"><%= application.property.title %></td>
@@ -124,4 +124,3 @@
       </td>
     </tr>
   </table>
-<% end %>

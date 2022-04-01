@@ -15,6 +15,7 @@
       <% if current_user&.administrator %>
         <%= link_to 'New Property', new_property_path %>
       <% end %>
+      <%= link_to 'Dashboard', admin_panel_path, method: :get %>
        Hi, <%= current_user.full_name %>
       <%= button_to "Log out", session_path, method: :delete %>
     <% else %>
