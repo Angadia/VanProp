@@ -25,7 +25,7 @@ ActiveRecord::Schema[7.0].define(version: 2022_03_31_035418) do
   end
 
   create_table "applications", force: :cascade do |t|
-    t.string "pending", default: "pending", null: false
+    t.string "status", default: "pending", null: false
     t.bigint "user_id", null: false
     t.bigint "property_id", null: false
     t.datetime "created_at", null: false

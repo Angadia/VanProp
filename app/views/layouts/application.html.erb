@@ -19,11 +19,12 @@
           </div>
           <ul class="menu">
               <%if(user_signed_in?) %>
-              <% if current_user&.administrator %>
+                <% if current_user&.administrator %>
             <li>
               <%= link_to 'New Property', new_property_path %>
             </li>
-          <% end %>
+              <% end %>
+      <%= link_to 'Dashboard', admin_panel_path, method: :get %>
             <li>
              <p> Hi, <%= current_user.full_name %></p>
             </li>
