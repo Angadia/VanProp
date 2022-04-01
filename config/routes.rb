@@ -5,15 +5,6 @@ Rails.application.routes.draw do
   # root "articles#index"
   root 'properties#index'
 
-<<<<<<< HEAD
-  resources :properties, except: [:index] do
-    resources :applications, only: [:create, :destroy]
-    resources :questions, only: [:create, :destroy, :update] do
-      resources :answers, shallow: true, only: [:create, :destroy]
-    end
-  end
-
-=======
   get '/dashboard', { to: 'users#admin_panel', as: :admin_panel }
 
   resources :users, only:  %i[new create]
@@ -29,5 +20,4 @@ Rails.application.routes.draw do
       resources :answers, shallow: true, only: %i[create destroy]
     end
   end
->>>>>>> origin/integration
 end
