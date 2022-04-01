@@ -1,28 +1,2 @@
-<h1>New Property Page</h1>
+<%= render "form" %>
 
-<%= form_with model:@property do |form|%>
-<div>
-    <%= form.label :title%>
-    <%= form.text_field :title%>
-</div>
-<div>
-    <%= form.label :description%>
-    <%= form.text_area :description%>
-</div>
-<div>
-    <%= form.label :location%>
-    <%= form.text_area :location%>
-</div>
-<div>
-    <%= form.label :amenities%>
-    <%= form.text_area :amenities%>
-</div>
-<div>
-    <%= form.label :price%>
-    <%= form.number_field :price%>
-</div>
-
-<div>
-    <%= form.submit%>
-</div>
-<% end %>
