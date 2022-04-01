@@ -4,12 +4,12 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   # root "articles#index"
   root 'properties#index'
-  
-  resources :users, only:  [:new, :create]
-  
-  
-  
-  resource :session, only: [:new, :create, :destroy]
+
+  get '/dashboard', { to: 'users#admin_panel', as: :admin_panel }
+
+  resources :users, only:  %i[new create]
+
+  resource :session, only: %i[new create destroy]
 
   resources :properties, except: [:index]
 end
