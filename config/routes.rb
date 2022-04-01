@@ -14,5 +14,11 @@ Rails.application.routes.draw do
   post '/applications/:id', { to: 'applications#approve', as: :approve_application }
   post '/applications/:id', { to: 'applications#reject', as: :reject_application }
 
-  resources :properties, except: [:index]
+  resources :properties, except: [:index] do
+    resources :applications, only: [:create, :destroy]
+    resources :questions, only: [:create, :destroy, :update] do
+      resources :answers, shallow: true, only: [:create, :destroy]
+    end
+  end
+
 end
