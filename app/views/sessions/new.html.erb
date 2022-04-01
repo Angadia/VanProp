@@ -1,13 +1,14 @@
-<h1>Sign In</h1>
 
 <%= form_with url: session_path  do |f| %>
-    <div>
+<div class="signin-form">
+    <div class="input-group">
         <%= f.label :email%>
         <%= f.email_field :email%> 
     </div>
-    <div>
+    <div class="input-group">
         <%= f.label :password%>
         <%= f.password_field :password%> 
     </div>
     <%= f.submit "Sign In" %>
+</div>
 <% end %>
