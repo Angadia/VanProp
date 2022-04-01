@@ -1,0 +1,121 @@
+<% if current_user.administrator %>
+  <h1>Administrator Panel</h1>
+  <table>
+    <tr style="text-align:left;">
+      <th>Properties</th>
+      <th>Pending Questions</th>
+      <th>Pending Applications</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+        <table style="border: 1px solid black; border-collapse: collapse;">
+          <tr>
+            <th style="border: 1px solid black; border-collapse: collapse;">ID</th>
+            <th style="border: 1px solid black; border-collapse: collapse;">Title</th>
+          </tr>
+          <% @my_properties.each do |property| %>
+            <tr>
+              <td style="border: 1px solid black; border-collapse: collapse;"><%= property.id %></td>
+              <td style="border: 1px solid black; border-collapse: collapse;"><%= property.title %></td>
+            </tr>
+          <% end %>
+        </table>
+      </td>
+      <td>
+        <table style="border: 1px solid black; border-collapse: collapse;">
+          <tr>
+            <th style="border: 1px solid black; border-collapse: collapse;">ID</th>
+            <th style="border: 1px solid black; border-collapse: collapse;">Title</th>
+            <th style="border: 1px solid black; border-collapse: collapse;">Questions</th>
+            <th style="border: 1px solid black; border-collapse: collapse;">Next Step</th>
+          </tr>
+          <% @pending_questions.each do |property| %>
+            <% property.questions.where.not(questions: {id: @answered_questions}).each do |question| %>
+              <tr>
+                <td style="border: 1px solid black; border-collapse: collapse;"><%= property.id %></td>
+                <td style="border: 1px solid black; border-collapse: collapse;"><%= property.title %></td>
+                <td style="border: 1px solid black; border-collapse: collapse;"><%= question.body %></td>
+                <td style="border: 1px solid black; border-collapse: collapse;"><%= button_to 'Answer', property_path(property), method: :get %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </table>
+      </td>
+      <td style="vertical-align: top;">
+        <table style="border: 1px solid black; border-collapse: collapse;">
+          <tr>
+            <th style="border: 1px solid black; border-collapse: collapse;">ID</th>
+            <th style="border: 1px solid black; border-collapse: collapse;">Title</th>
+            <th style="border: 1px solid black; border-collapse: collapse;">Client Name</th>
+            <th style="border: 1px solid black; border-collapse: collapse;">Client email</th>
+            <th style="border: 1px solid black; border-collapse: collapse;">Next Step</th>
+          </tr>
+          <% @pending_applications.each do |property| %>
+            <% property.applications.where(status: :pending).each do |application| %>
+              <tr>
+                <td style="border: 1px solid black; border-collapse: collapse;"><%= property.id %></td>
+                <td style="border: 1px solid black; border-collapse: collapse;"><%= property.title %></td>
+                <td style="border: 1px solid black; border-collapse: collapse;"><%= application.user.full_name %></td>
+                <td style="border: 1px solid black; border-collapse: collapse;"><%= application.user.email %></td>
+                <td style="border: 1px solid black; border-collapse: collapse;"><%= button_to 'Approve', property_path(property), method: :get %> <%= button_to 'Reject', root_path, method: :get %></td>
+              </tr>
+            <% end %>
+          <% end %>
+        </table>
+      </td>
+    </tr>
+  </table>
+<% else %>
+  <h1>Client Panel</h1>
+  <table>
+    <tr style="text-align:left;">
+      <th>Questions</th>
+      <th>Applications</th>
+      <th>Pending Applications</th>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">
+        <table style="border: 1px solid black; border-collapse: collapse;">
+          <tr>
+            <th style="border: 1px solid black; border-collapse: collapse;">Property</th>
+            <th style="border: 1px solid black; border-collapse: collapse;">Question</th>
+          </tr>
+          <% @my_questions.each do |question| %>
+            <tr>
+              <td style="border: 1px solid black; border-collapse: collapse;"><%= question.property.title %></td>
+              <td style="border: 1px solid black; border-collapse: collapse;"><%= question.body %></td>
+            </tr>
+          <% end %>
+        </table>
+      </td>
+      <td>
+        <table style="border: 1px solid black; border-collapse: collapse;">
+          <tr>
+            <th style="border: 1px solid black; border-collapse: collapse;">Property</th>
+            <th style="border: 1px solid black; border-collapse: collapse;">Status</th>
+          </tr>
+          <% @my_applications.each do |application| %>
+            <tr>
+              <td style="border: 1px solid black; border-collapse: collapse;"><%= application.property.title %></td>
+              <td style="border: 1px solid black; border-collapse: collapse;"><%= application.status %></td>
+            </tr>
+          <% end %>
+        </table>
+      </td>
+      <td style="vertical-align: top;">
+        <table style="border: 1px solid black; border-collapse: collapse;">
+          <tr>
+            <th style="border: 1px solid black; border-collapse: collapse;">Property</th>
+            <th style="border: 1px solid black; border-collapse: collapse;">Status</th>
+          </tr>
+          <% @pending_applications.each do |application| %>
+            <tr>
+              <td style="border: 1px solid black; border-collapse: collapse;"><%= application.property.title %></td>
+              <td style="border: 1px solid black; border-collapse: collapse;"><%= application.status %></td>
+            </tr>
+          <% end %>
+        </table>
+      </td>
+    </tr>
+  </table>
+<% end %>
