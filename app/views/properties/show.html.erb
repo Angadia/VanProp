@@ -9,7 +9,7 @@
 <p> Created <%= time_ago_in_words(@property.created_at) %> ago </p>
 <% if user_signed_in? %>
     <% if current_user.id == @property.user_id %>
-    <%= button_to "Edit", edit_property_path(@property)%>
+    <%= button_to "Edit", edit_property_path(@property), method: :get%>
     <%= button_to 'Delete', property_path(@property), method: :delete %>
     <% end %>
     <% if current_user.id != @property.user_id %>
