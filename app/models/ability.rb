@@ -38,5 +38,9 @@ class Ability
     can :crud, Property do |property|
       user == property.user && user.administrator == true
     end
+
+    can :update, Application do |application|
+      user == application.property.user && user.administrator == true
+    end
   end
 end

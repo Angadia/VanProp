@@ -11,5 +11,8 @@ Rails.application.routes.draw do
 
   resource :session, only: %i[new create destroy]
 
+  post '/applications/:id', { to: 'applications#approve', as: :approve_application }
+  post '/applications/:id', { to: 'applications#reject', as: :reject_application }
+
   resources :properties, except: [:index]
 end

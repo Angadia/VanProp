@@ -57,7 +57,7 @@
                 <td style="border: 1px solid black; border-collapse: collapse;"><%= property.title %></td>
                 <td style="border: 1px solid black; border-collapse: collapse;"><%= application.user.full_name %></td>
                 <td style="border: 1px solid black; border-collapse: collapse;"><%= application.user.email %></td>
-                <td style="border: 1px solid black; border-collapse: collapse;"><%= button_to 'Approve', property_path(property), method: :get %> <%= button_to 'Reject', root_path, method: :get %></td>
+                <td style="border: 1px solid black; border-collapse: collapse;"><%= button_to 'Approve', approve_application_path(application) %> <%= button_to 'Reject', reject_application_path(application) %></td>
               </tr>
             <% end %>
           <% end %>
@@ -77,11 +77,13 @@
       <td style="vertical-align: top;">
         <table style="border: 1px solid black; border-collapse: collapse;">
           <tr>
+            <th style="border: 1px solid black; border-collapse: collapse;">ID</th>
             <th style="border: 1px solid black; border-collapse: collapse;">Property</th>
             <th style="border: 1px solid black; border-collapse: collapse;">Question</th>
           </tr>
           <% @my_questions.each do |question| %>
             <tr>
+              <td style="border: 1px solid black; border-collapse: collapse;"><%= question.property.id %></td>
               <td style="border: 1px solid black; border-collapse: collapse;"><%= question.property.title %></td>
               <td style="border: 1px solid black; border-collapse: collapse;"><%= question.body %></td>
             </tr>
@@ -91,11 +93,13 @@
       <td>
         <table style="border: 1px solid black; border-collapse: collapse;">
           <tr>
+            <th style="border: 1px solid black; border-collapse: collapse;">ID</th>
             <th style="border: 1px solid black; border-collapse: collapse;">Property</th>
             <th style="border: 1px solid black; border-collapse: collapse;">Status</th>
           </tr>
           <% @my_applications.each do |application| %>
             <tr>
+              <td style="border: 1px solid black; border-collapse: collapse;"><%= application.property.id %></td>
               <td style="border: 1px solid black; border-collapse: collapse;"><%= application.property.title %></td>
               <td style="border: 1px solid black; border-collapse: collapse;"><%= application.status %></td>
             </tr>
@@ -105,11 +109,13 @@
       <td style="vertical-align: top;">
         <table style="border: 1px solid black; border-collapse: collapse;">
           <tr>
+            <th style="border: 1px solid black; border-collapse: collapse;">ID</th>
             <th style="border: 1px solid black; border-collapse: collapse;">Property</th>
             <th style="border: 1px solid black; border-collapse: collapse;">Status</th>
           </tr>
           <% @pending_applications.each do |application| %>
             <tr>
+              <td style="border: 1px solid black; border-collapse: collapse;"><%= application.property.id %></td>
               <td style="border: 1px solid black; border-collapse: collapse;"><%= application.property.title %></td>
               <td style="border: 1px solid black; border-collapse: collapse;"><%= application.status %></td>
             </tr>
