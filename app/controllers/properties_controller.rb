@@ -65,7 +65,7 @@ class PropertiesController < ApplicationController
 
   def destroy
     @property.destroy
-    redirect_to property_path, status: 303
+    redirect_to root_path, status: 303
   end
 
   private
@@ -76,18 +76,6 @@ class PropertiesController < ApplicationController
 
   def authorize_user!
     redirect_to root_path, { alert: 'Not authorized', status: 303 } unless can?(:crud, @property)
-  end
-
-  def destroy
-    # destroy property
-    property = Property.find_by_id params[:id]
-    if current_user.id ==  property.user_id
-      if property.destroy
-        p "property deleted"
-        flash[:notice] = "property deleted"
-        redirect_to root_path, status: 303
-      end 
-    end
   end
 
 end
