@@ -1,0 +1,107 @@
+
+<div class = "showpage-container"> 
+<h3 class = "showpage-title" > <%= @property.title %> </h3>
+<p class = "showpage-discription"> <%= @property.description %> </p>
+<p class = "showpage-location"> <%= @property.location %> </p>
+<p class = "showpage-price"> $<%= @property.price %> </p>
+<p class = "showpage-amenities"> <%= @property.amenities %> </p>
+<p class = "showpage-created_by"> Created By <%= (User.find_by_id @property.user_id).full_name %> </p>
+<p class = "showpage-created_time"> Created <%= time_ago_in_words(@property.created_at) %> ago </p>
+<% if user_signed_in? %>
+    <% if current_user.id == @property.user_id %>
+    <div class = "showpage-edit-property-button">
+    <%= button_to "Edit", edit_property_path(@property), method: :get%>
+    </div>
+    <div class = "showpage-delete-property-button">
+    <%= button_to 'Delete', property_path(@property), method: :delete %>
+    </div>
+    <% end %>
+    <% if current_user.id != @property.user_id %>
+        <%= form_with(model: @application, url: property_applications_path(@property)) do |form|  %>
+            <div class = "showpage-application-button" >
+                <%= form.hidden_field :property_id, value: @property.id %>
+                <%= form.hidden_field :user_id, value: current_user.id %>
+                <%= form.submit "Apply for Property" %>
+            </div>
+        <% end %>
+    <% end %>
+<% end %>
+</div>
+<% if user_signed_in? %>
+    <% if current_user.id != @property.user_id %>
+        <%= form_with(model: @question, url: property_questions_path(@property.id)) do |form|  %>
+            <div class = "showpage-question-form">
+                <h3>Ask a question about this property </h3>
+                <%= form.text_field :body %>
+                <%= form.hidden_field :property_id, value: @property.id %>
+                <%= form.hidden_field :user_id, value: current_user.id %>
+                <%= form.submit "Create Question"%>
+            </div>
+        <% end %>
+    <% end %>
+<% end %>
+
+                <div class = "showpage-question-container"> 
+                    <div class = "showpage-question-answer-container"> 
+<% if @questions %> 
+    <% @questions.each do |question| %>
+        <hr>
+        <% if user_signed_in? %>
+            <% if question.display || current_user.id == @property.user_id || current_user.id == question.user_id %>
+                <div>
+                <h5> <%= question.body %> </h5>
+                <p> Created By <%= (User.find_by_id question.user_id).full_name %> </p>
+                <p> Created <%= time_ago_in_words(question.created_at) %> ago </p>
+                <% if user_signed_in? %>
+                    <% if current_user.id == question.user_id || current_user.id == @property.user_id %>
+                        <%= button_to 'Delete', property_question_path(@property.id, question.id), method: :delete %>
+                        <% if question.display %>
+                        <%= button_to 'Hide', property_question_path(@property.id, question.id), method: :patch %>
+                        <% else %>
+                        <%= button_to 'Show', property_question_path(@property.id, question.id), method: :patch %>
+                        <% end %>
+                    <% end %> 
+                <% end %>
+                <% if user_signed_in? %>
+                    <%= form_with(model: [@question, @answer], url: property_question_answers_path(@property.id, question.id)) do |form|  %>
+                        <div>
+                            <%= form.label :body, "Answer this question" %>
+                            <%= form.text_field :body %>
+                            <%= form.hidden_field :question_id, value: question.id %>
+                            <%= form.submit %>
+                        </div>
+                
+                    <% end %>
+                <% end %>
+                <% if Answer.where(question_id: question.id) %>
+                    <% answers = Answer.where(question_id: question.id) %>
+                    <% answers.each do |answer|%>
+                        <p> <%= answer.body %> </p>
+                        <p> Answer created by <%= (User.find_by_id answer.user_id).full_name %> </p>
+                        <% if user_signed_in? %>
+                            <% if current_user.id == answer.user_id || current_user.id == @property.user_id %>
+                                <%= button_to 'Delete', answer_path(answer.id, @property.id), method: :delete %>
+                                <hr>
+                                </div>
+                            <% end %>
+                        <% end %>
+                    <% end %>
+                <% end %>
+            <% end %>
+        <% else %>
+            <% if question.display %>
+                <div class = "showpage-question-answer-container">
+                <h3> <%= question.body %> </h3>
+                <p> Created By <%= (User.find_by_id question.user_id).full_name %> </p>
+                <p> Created <%= time_ago_in_words(question.created_at) %> ago </p>
+                <% answers = Answer.where(question_id: question.id) %>
+                    <% answers.each do |answer|%>
+                        <p> <%= answer.body %> </p>
+                        <p> Answer created by <%= (User.find_by_id answer.user_id).full_name %> </p>
+                </div>
+                <% end %>
+            <% end %>
+        <% end %>
+    <% end %>
+<% end %>           </div>
+                </div>

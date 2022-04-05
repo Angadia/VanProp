@@ -1,0 +1,25 @@
+<%= form_with model: @property do |form| %> 
+<div class="property-form">
+    <div class="input-group">
+        <%= form.label :title %>
+        <%= form.text_field :title %>
+    </div>
+    <div class="input-group">
+        <%= form.label :description %>
+        <%= form.text_area :description %>
+    </div>
+    <div class="input-group">
+        <%= form.label :location %>
+        <%= form.text_area :location %>
+    </div>
+    <div class="input-group">
+        <%= form.label :amenities %>
+        <%= form.text_area :amenities %>
+    </div>
+    <div class="input-group">
+        <%= form.label :price%>
+        <%= form.number_field :price %>
+    </div>
+        <%= form.submit %>
+</div>
+<% end %>

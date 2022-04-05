@@ -1,0 +1,25 @@
+    <%= form_with model: @user do |f|%>
+    <div class="signup-form">
+        <div class="input-group">
+            <%= f.label :first_name%>
+            <%= f.text_field :first_name%>
+        </div>
+        <div class="input-group">
+            <%= f.label :last_name%>
+            <%= f.text_field :last_name%>
+        </div>
+        <div class="input-group">
+            <%= f.label :email%>
+            <%= f.text_field :email%>
+        </div>
+        <div class="input-group">
+            <%= f.label :password%>
+            <%= f.text_field :password%>
+        </div>
+        <div class="input-group">
+            <%= f.label :password_confirmation%>
+            <%= f.text_field :password_confirmation%>
+        </div>
+        <%= f.submit "Sign Up" %>
+    </div>
+<% end %>
