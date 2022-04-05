@@ -13,9 +13,7 @@ class PropertiesController < ApplicationController
     @question = Question.new
     @answer = Answer.new
     @application = Application.new
-    if user_signed_in?
-      @appilcation_user = Application.find_by_user_id current_user.id
-    end
+    @appilcation_user = Application.find_by_user_id current_user.id if user_signed_in?
   end
 
   def new
@@ -25,13 +23,11 @@ class PropertiesController < ApplicationController
   end
 
   def create
-    puts "-------------#{current_user.administrator}"
     unless current_user&.administrator
-      redirect_to show_property_path,
+      redirect_to root_path,
                   { alert: 'Not authorized', status: 303 } and return
     end
 
-    puts "-----------xxx--#{current_user.administrator}"
     @property = Property.new params.require(:property)
                                    .permit(
                                      :title,
@@ -44,7 +40,6 @@ class PropertiesController < ApplicationController
     if @property.save  # or @property.persisted?
       redirect_to property_path(@property), { notice: 'Created property', status: 303 }
     else
-      puts @property.errors.full_messages
       render :new, status: 303
     end
   end
@@ -64,8 +59,9 @@ class PropertiesController < ApplicationController
   end
 
   def destroy
-    @property.destroy
-    redirect_to root_path, status: 303
+    redirect_to root_path, { status: 303, notice: 'Property deleted' } and return if @property.destroy
+    flash.alert = 'Error, property not deleted'
+    render :show, status: 303
   end
 
   private
@@ -77,5 +73,4 @@ class PropertiesController < ApplicationController
   def authorize_user!
     redirect_to root_path, { alert: 'Not authorized', status: 303 } unless can?(:crud, @property)
   end
-
 end
